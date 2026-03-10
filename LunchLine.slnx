@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Core/">
+    <Project Path="src/Core/LunchLine.Application/LunchLine.Application.csproj" Id="87c9a747-aeb9-49f8-a2b3-a7aa10b9cc1e" />
+    <Project Path="src/Core/LunchLine.Domain/LunchLine.Domain.csproj" Id="f5fa99cb-9f8e-4d87-a1ab-953ed38ea388" />
+  </Folder>
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="src/Infrastructure/LunchLine.Infrastructure/LunchLine.Infrastructure.csproj" Id="0f64c212-c965-4c97-a6a3-be0f17a42d08" />
+    <Project Path="src/Infrastructure/LunchLine.Persistence/LunchLine.Persistence.csproj" Id="cc9c8a63-2a9a-4ade-a1fb-3f66cc15dfaa" />
+  </Folder>
+  <Folder Name="/src/Presentation/">
+    <Project Path="src/Presentation/LunchLine.API/LunchLine.API.csproj" Id="58e86f07-0dbc-4cc4-bd95-5bef8f73fed1" />
+  </Folder>
+</Solution>
