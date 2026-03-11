@@ -28,7 +28,7 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.Property(x => x.Salary)
             .HasPrecision(18, 2);
 
-        builder.Property(x => x.MounthlyTips)
+        builder.Property(x => x.MonthlyTips)
             .HasPrecision(18, 2);
 
         builder.Property(x => x.TotalTips)

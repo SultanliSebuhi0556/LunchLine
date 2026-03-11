@@ -19,6 +19,7 @@ public static class ServiceRegistrationPersistence
     private static IServiceCollection AddDependencies(this IServiceCollection services)
     {
         services.AddScoped<IEmployeeService, EmployeeService>();
+        services.AddScoped<IPositionService, PositionService>();
         return services;
     }
 

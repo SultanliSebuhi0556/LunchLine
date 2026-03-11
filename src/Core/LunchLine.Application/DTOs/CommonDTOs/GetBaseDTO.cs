@@ -1,4 +1,4 @@
-﻿namespace LunchLine.Application.DTOs.EmployeeDTOs.CommonDTOs;
+﻿namespace LunchLine.Application.DTOs.CommonDTOs;
 
 public record GetBaseDTO
 {

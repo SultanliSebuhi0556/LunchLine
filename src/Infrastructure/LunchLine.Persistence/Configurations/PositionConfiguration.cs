@@ -18,9 +18,10 @@ public class PositionConfiguration : IEntityTypeConfiguration<Position>
         builder.HasData(
             new Position
             {
-                Id = new Guid(),
+                Id = Guid.Parse("550e8400-e29b-41d4-a716-446655440000"),
                 Name = "Admin",
-                Role = Role.Admin
+                Role = Role.Admin,
+                CreatedAt = DateTime.MinValue
             });
     }
 }

@@ -12,6 +12,6 @@ public class Employee : BaseEntity
     public Guid PositionId { get; set; }
     public bool? Gender { get; set; }
     public float Salary { get; set; }
-    public float MounthlyTips { get; set; }
+    public float MonthlyTips { get; set; }
     public float TotalTips { get; set; }
 }

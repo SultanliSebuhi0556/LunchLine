@@ -4,9 +4,9 @@ using LunchLine.Domain.Entities;
 
 namespace LunchLine.Application.MapperProfiles;
 
-public class EmployeeProfile : Profile
+public class EmployeeProfiles : Profile
 {
-    protected EmployeeProfile()
+    protected EmployeeProfiles()
     {
         CreateMap<EmployeeCreateDTO, Employee>();
         CreateMap<EmployeeUpdateDTO, Employee>();
