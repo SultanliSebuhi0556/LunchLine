@@ -8,30 +8,25 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 {
     public void Configure(EntityTypeBuilder<Employee> builder)
     {
-        builder.Property(x => x.Name).IsRequired()
-            .HasMaxLength(50);
+        builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.Surname).IsRequired()
-            .HasMaxLength(50);
+        builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
 
-        builder.Property(x => x.Email).IsRequired()
-            .HasMaxLength(100);
+        builder.Property(x => x.Surname).IsRequired().HasMaxLength(50);
 
-        builder.Property(x => x.PhoneNumber).IsRequired()
-            .HasMaxLength(15);
+        builder.Property(x => x.Email).IsRequired().HasMaxLength(100);
+
+        builder.Property(x => x.PhoneNumber).IsRequired().HasMaxLength(15);
 
         builder.HasOne(x => x.Position)
             .WithMany()
             .HasForeignKey(x => x.PositionId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Property(x => x.Salary)
-            .HasPrecision(18, 2);
+        builder.Property(x => x.Salary).HasPrecision(18, 2);
 
-        builder.Property(x => x.MonthlyTips)
-            .HasPrecision(18, 2);
+        builder.Property(x => x.MonthlyTips).HasPrecision(18, 2);
 
-        builder.Property(x => x.TotalTips)
-            .HasPrecision(18, 2);
+        builder.Property(x => x.TotalTips).HasPrecision(18, 2);
     }
 }

@@ -11,9 +11,8 @@ public class PositionConfiguration : IEntityTypeConfiguration<Position>
     {
         builder.HasKey(x => x.Id);
 
-        builder.Property(x => x.Name)
-            .IsRequired()
-            .IsUnicode();
+        builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
+        builder.HasIndex(x => x.Name).IsUnique();
 
         builder.HasData(
             new Position
