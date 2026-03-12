@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LunchLine.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260311062148_init")]
+    [Migration("20260312133600_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -126,17 +126,12 @@ namespace LunchLine.Persistence.Migrations
             modelBuilder.Entity("LunchLine.Domain.Entities.Employee", b =>
                 {
                     b.HasOne("LunchLine.Domain.Entities.Position", "Position")
-                        .WithMany("Employees")
+                        .WithMany()
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Position");
-                });
-
-            modelBuilder.Entity("LunchLine.Domain.Entities.Position", b =>
-                {
-                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

@@ -9,7 +9,6 @@ public class EmployeeUpdateDTOValidator : AbstractValidator<EmployeeUpdateDTO>
     {
         RuleFor(x => x.Name).NotEmpty().MaximumLength(50);
         RuleFor(x => x.Surname).NotEmpty().MaximumLength(50);
-        RuleFor(x => x.PositionId).NotEmpty();
         RuleFor(x => x.Salary).GreaterThan(0);
         RuleFor(x => x.Email).NotEmpty().EmailAddress();
         RuleFor(x => x.PhoneNumber).NotEmpty()

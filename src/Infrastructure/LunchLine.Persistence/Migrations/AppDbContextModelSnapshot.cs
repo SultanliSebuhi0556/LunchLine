@@ -123,17 +123,12 @@ namespace LunchLine.Persistence.Migrations
             modelBuilder.Entity("LunchLine.Domain.Entities.Employee", b =>
                 {
                     b.HasOne("LunchLine.Domain.Entities.Position", "Position")
-                        .WithMany("Employees")
+                        .WithMany()
                         .HasForeignKey("PositionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Position");
-                });
-
-            modelBuilder.Entity("LunchLine.Domain.Entities.Position", b =>
-                {
-                    b.Navigation("Employees");
                 });
 #pragma warning restore 612, 618
         }

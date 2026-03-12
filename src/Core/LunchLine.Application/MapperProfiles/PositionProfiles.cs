@@ -6,10 +6,10 @@ namespace LunchLine.Application.MapperProfiles;
 
 public class PositionProfiles : Profile
 {
-    protected PositionProfiles()
+    public PositionProfiles()
     {
         CreateMap<PositionCreateDTO, Position>();
-        CreateMap<PositionUpdateDTO, Position>();
+        CreateMap<PositionUpdateDTO, Position>().ForMember(x => x.Id, opt => opt.Ignore());
         CreateMap<Position, PositionGetDTO>();
     }
 }

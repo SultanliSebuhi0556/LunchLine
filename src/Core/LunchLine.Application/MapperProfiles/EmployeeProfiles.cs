@@ -6,10 +6,10 @@ namespace LunchLine.Application.MapperProfiles;
 
 public class EmployeeProfiles : Profile
 {
-    protected EmployeeProfiles()
+    public EmployeeProfiles()
     {
         CreateMap<EmployeeCreateDTO, Employee>();
-        CreateMap<EmployeeUpdateDTO, Employee>();
+        CreateMap<EmployeeUpdateDTO, Employee>().ForMember(x => x.Id, opt => opt.Ignore());
         CreateMap<Employee, EmployeeGetDTO>();
     }
 }

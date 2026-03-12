@@ -1,7 +1,10 @@
-﻿namespace LunchLine.Application.DTOs.CommonDTOs;
+﻿using System.Text.Json.Serialization;
+
+namespace LunchLine.Application.DTOs.CommonDTOs;
 
 public record GetBaseDTO
 {
+    [JsonPropertyOrder(-1)]
     public string Id { get; set; }
     public bool IsArchived { get; set; }
     public DateTime? ArchivedAt { get; set; }

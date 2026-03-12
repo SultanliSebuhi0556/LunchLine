@@ -21,7 +21,7 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
             .HasMaxLength(15);
 
         builder.HasOne(x => x.Position)
-            .WithMany(x => x.Employees)
+            .WithMany()
             .HasForeignKey(x => x.PositionId)
             .OnDelete(DeleteBehavior.Restrict);
 

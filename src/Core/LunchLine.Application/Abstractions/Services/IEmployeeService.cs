@@ -8,9 +8,9 @@ public interface IEmployeeService
     Task<string> AddEmployeeAsync(EmployeeCreateDTO dto);
     Task RemoveEmployeeByIdAsync(string id);
     Task ArchiveEmployeeByIdAsync(string id);
-    Task UpdateEmployeeAsync(string id, EmployeeUpdateDTO dto);
+    Task UpdateEmployeeAsync(EmployeeUpdateDTO dto);
 
-    Task AssignPositionAsync(string employeeId, string positionId);
+    Task AssignPositionAsync(EmployeeAssignPositionDTO dto);
 
     Task<EmployeeGetDTO> GetEmployeeByIdAsync(string id);
     Task<IEnumerable<EmployeeGetDTO>> GetEmployeesAsync(GetListDTO dto);

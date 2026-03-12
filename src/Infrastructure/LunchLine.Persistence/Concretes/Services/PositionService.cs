@@ -22,8 +22,8 @@ public class PositionService(AppDbContext _context, IMapper _mapper) : IPosition
     public async Task ArchivePositionByIdAsync(string id)
     {
         var position = await _getPosition(id);
-        position.IsArchived = true;
-        position.ArchivedAt = DateTime.UtcNow;
+        position.IsArchived = !position.IsArchived;
+        position.ArchivedAt = position.IsArchived ? DateTime.UtcNow : null;
         await _context.SaveChangesAsync();
     }
 
@@ -37,7 +37,7 @@ public class PositionService(AppDbContext _context, IMapper _mapper) : IPosition
 
     public async Task<IEnumerable<PositionGetDTO>> GetPositionsAsync(GetListDTO dto)
     {
-        var positions = await _context.Positions.Skip(dto.Skip).Take(dto.Take).ToListAsync();
+        var positions = await _context.Positions.Where(x => x.IsArchived == dto.IsArchived).Skip(dto.Skip).Take(dto.Take).ToListAsync();
         return _mapper.Map<IEnumerable<PositionGetDTO>>(positions);
     }
 
@@ -47,9 +47,9 @@ public class PositionService(AppDbContext _context, IMapper _mapper) : IPosition
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdatePositionAsync(string id, PositionUpdateDTO dto)
+    public async Task UpdatePositionAsync(PositionUpdateDTO dto)
     {
-        _mapper.Map(dto, await _getPosition(id));
+        _mapper.Map(dto, await _getPosition(dto.Id));
         await _context.SaveChangesAsync();
     }
 
