@@ -1,4 +1,4 @@
-﻿using LunchLine.Domain.Entities.Workflow;
+using LunchLine.Domain.Entities.Workflow;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,7 +13,7 @@ public class MenuItemConfiguration : IEntityTypeConfiguration<MenuItem>
         builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
         builder.HasIndex(x => x.Name).IsUnique();
 
-        builder.Property(x => x.Price).HasPrecision(18, 2);
+        builder.Property(x => x.Price).HasPrecision(18, 2).IsRequired();
 
         builder.Property(x => x.Type).IsRequired();
     }

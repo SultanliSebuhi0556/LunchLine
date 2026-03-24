@@ -2,7 +2,7 @@
 
 namespace LunchLine.Application.DTOs.CommonDTOs;
 
-public record GetBaseDTO
+public record BaseGetDTO
 {
     [JsonPropertyOrder(-1)]
     public string Id { get; set; }

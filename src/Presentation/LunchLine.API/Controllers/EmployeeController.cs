@@ -17,14 +17,6 @@ public class EmployeeController(IEmployeeService _service, IValidationService _v
         return Ok(await _service.AddEmployeeAsync(dto));
     }
 
-    [HttpPost("[action]")]
-    public async Task<IActionResult> AssignPositionToEmployee([FromBody] EmployeeAssignPositionDTO dto)
-    {
-        await _validator.ValidateAsync(dto);
-        await _service.AssignPositionAsync(dto);
-        return Ok();
-    }
-
     [HttpPut("[action]")]
     public async Task<IActionResult> UpdateEmployee([FromBody] EmployeeUpdateDTO dto)
     {

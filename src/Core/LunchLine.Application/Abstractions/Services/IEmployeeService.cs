@@ -10,8 +10,6 @@ public interface IEmployeeService
     Task ArchiveEmployeeByIdAsync(string id);
     Task UpdateEmployeeAsync(EmployeeUpdateDTO dto);
 
-    Task AssignPositionAsync(EmployeeAssignPositionDTO dto);
-
     Task<EmployeeGetDTO> GetEmployeeByIdAsync(string id);
     Task<IEnumerable<EmployeeGetDTO>> GetEmployeesAsync(GetListDTO dto);
 }

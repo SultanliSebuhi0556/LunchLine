@@ -9,18 +9,15 @@ public class ExceptionHandlingMiddleware(RequestDelegate _next)
         try { await _next(context); }
         catch (ValidationException ex)
         {
-            context.Response.StatusCode = 400;
-            await context.Response.WriteAsJsonAsync(new
-            {
-                Errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage })
-            });
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            await context.Response.WriteAsJsonAsync(new { Errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage }) });
         }
         catch (Exception ex)
         {
-            context.Response.StatusCode = 400;
-            if (ex.InnerException == null)
-                await context.Response.WriteAsJsonAsync(new { Errors = ex.Message });
-            else await context.Response.WriteAsJsonAsync(new { Errors = ex.InnerException.Message });
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+            string message = ex.InnerException?.Message ?? ex.Message;
+            var cleanMessage = message.Replace("\r", "").Replace("\n", " ").Trim();
+            await context.Response.WriteAsJsonAsync(new { Errors = cleanMessage });
         }
     }
 }

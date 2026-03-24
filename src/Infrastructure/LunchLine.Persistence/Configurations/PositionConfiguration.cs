@@ -20,7 +20,7 @@ public class PositionConfiguration : IEntityTypeConfiguration<Position>
                 Id = Guid.Parse("550e8400-e29b-41d4-a716-446655440000"),
                 Name = "Admin",
                 Role = Role.Admin,
-                CreatedAt = DateTime.MinValue
+                CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
             });
     }
 }

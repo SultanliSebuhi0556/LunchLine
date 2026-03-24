@@ -2,7 +2,7 @@
 
 namespace LunchLine.Application.DTOs.EmployeeDTOs;
 
-public record EmployeeGetDTO : GetBaseDTO
+public record EmployeeGetDTO : BaseGetDTO
 {
     public string Name { get; set; }
     public string Surname { get; set; }
@@ -10,7 +10,7 @@ public record EmployeeGetDTO : GetBaseDTO
     public string PhoneNumber { get; set; }
     public string PositionId { get; set; }
     public bool? Gender { get; set; }
-    public float Salary { get; set; }
-    public float MonthlyTips { get; set; }
-    public float TotalTips { get; set; }
+    public decimal Salary { get; set; }
+    public decimal MonthlyTips { get; set; }
+    public decimal TotalTips { get; set; }
 }

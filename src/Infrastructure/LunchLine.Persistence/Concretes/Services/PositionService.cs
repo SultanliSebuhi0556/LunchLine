@@ -2,7 +2,7 @@
 using LunchLine.Application.Abstractions.Services;
 using LunchLine.Application.DTOs.CommonDTOs;
 using LunchLine.Application.DTOs.PositionDTOs;
-using LunchLine.Application.Exceptions;
+using LunchLine.Application.Exceptions.Commons;
 using LunchLine.Domain.Entities;
 using LunchLine.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +21,7 @@ public class PositionService(AppDbContext _context, IMapper _mapper) : IPosition
 
     public async Task ArchivePositionByIdAsync(string id)
     {
-        var position = await _getPosition(id);
+        var position = await _getPositionAsync(id);
         position.IsArchived = !position.IsArchived;
         position.ArchivedAt = position.IsArchived ? DateTime.UtcNow : null;
         await _context.SaveChangesAsync();
@@ -29,10 +29,7 @@ public class PositionService(AppDbContext _context, IMapper _mapper) : IPosition
 
     public async Task<PositionGetDTO> GetPositionByIdAsync(string id)
     {
-        var position = await _context.Positions.FirstOrDefaultAsync(x => x.Id.ToString() == id);
-        if (position == null) throw new NotFoundException<Position>();
-
-        return _mapper.Map<PositionGetDTO>(position);
+        return _mapper.Map<PositionGetDTO>(await _getPositionAsync(id));
     }
 
     public async Task<IEnumerable<PositionGetDTO>> GetPositionsAsync(GetListDTO dto)
@@ -43,17 +40,17 @@ public class PositionService(AppDbContext _context, IMapper _mapper) : IPosition
 
     public async Task RemovePositionByIdAsync(string id)
     {
-        await Task.Run(async () => _context.Remove(await _getPosition(id)));
+        await Task.Run(async () => _context.Remove(await _getPositionAsync(id)));
         await _context.SaveChangesAsync();
     }
 
     public async Task UpdatePositionAsync(PositionUpdateDTO dto)
     {
-        _mapper.Map(dto, await _getPosition(dto.Id));
+        _mapper.Map(dto, await _getPositionAsync(dto.Id));
         await _context.SaveChangesAsync();
     }
 
-    private async Task<Position> _getPosition(string id)
+    private async Task<Position> _getPositionAsync(string id)
     {
         var position = await _context.Positions.FirstOrDefaultAsync(x => x.Id.ToString() == id);
         if (position == null) throw new NotFoundException<Position>();

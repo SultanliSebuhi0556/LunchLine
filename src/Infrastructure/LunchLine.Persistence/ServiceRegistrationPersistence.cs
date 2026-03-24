@@ -20,6 +20,9 @@ public static class ServiceRegistrationPersistence
     {
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IPositionService, PositionService>();
+        services.AddScoped<ITableService, TableService>();
+        services.AddScoped<IMenuItemService, MenuItemService>();
+        services.AddScoped<IOrderService, OrderService>();
         return services;
     }
 

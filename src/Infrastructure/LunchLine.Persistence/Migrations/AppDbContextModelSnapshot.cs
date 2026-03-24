@@ -45,9 +45,9 @@ namespace LunchLine.Persistence.Migrations
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
 
-                    b.Property<float>("MonthlyTips")
+                    b.Property<decimal>("MonthlyTips")
                         .HasPrecision(18, 2)
-                        .HasColumnType("real");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -62,20 +62,23 @@ namespace LunchLine.Persistence.Migrations
                     b.Property<Guid>("PositionId")
                         .HasColumnType("uuid");
 
-                    b.Property<float>("Salary")
+                    b.Property<decimal>("Salary")
                         .HasPrecision(18, 2)
-                        .HasColumnType("real");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<string>("Surname")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<float>("TotalTips")
+                    b.Property<decimal>("TotalTips")
                         .HasPrecision(18, 2)
-                        .HasColumnType("real");
+                        .HasColumnType("numeric(18,2)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.HasIndex("PositionId");
 
@@ -116,7 +119,7 @@ namespace LunchLine.Persistence.Migrations
                         new
                         {
                             Id = new Guid("550e8400-e29b-41d4-a716-446655440000"),
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsArchived = false,
                             Name = "Admin",
                             Role = 0
@@ -146,9 +149,9 @@ namespace LunchLine.Persistence.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<float>("Price")
+                    b.Property<decimal>("Price")
                         .HasPrecision(18, 2)
-                        .HasColumnType("real");
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<int>("Type")
                         .HasColumnType("integer");
@@ -177,6 +180,9 @@ namespace LunchLine.Persistence.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("character varying(250)");
 
+                    b.Property<Guid>("EmployeeId")
+                        .HasColumnType("uuid");
+
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
 
@@ -188,9 +194,48 @@ namespace LunchLine.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("EmployeeId");
+
                     b.HasIndex("TableId");
 
                     b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("LunchLine.Domain.Entities.Workflow.OrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("ArchivedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("MenuItemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("numeric(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuItemId");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("LunchLine.Domain.Entities.Workflow.Table", b =>
@@ -205,18 +250,28 @@ namespace LunchLine.Persistence.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<int>("Direction")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Floor")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Identificator")
+                    b.Property<string>("Identifier")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(10)
+                        .HasColumnType("character varying(10)");
 
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsVIP")
                         .HasColumnType("boolean");
+
+                    b.Property<int>("PositionX")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PositionY")
+                        .HasColumnType("integer");
 
                     b.Property<int>("SeatCount")
                         .HasColumnType("integer");
@@ -228,22 +283,10 @@ namespace LunchLine.Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Identifier")
+                        .IsUnique();
+
                     b.ToTable("Tables");
-                });
-
-            modelBuilder.Entity("MenuItemOrder", b =>
-                {
-                    b.Property<Guid>("MenuItemsId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("OrdersId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("MenuItemsId", "OrdersId");
-
-                    b.HasIndex("OrdersId");
-
-                    b.ToTable("MenuItemOrder");
                 });
 
             modelBuilder.Entity("LunchLine.Domain.Entities.Employee", b =>
@@ -259,28 +302,60 @@ namespace LunchLine.Persistence.Migrations
 
             modelBuilder.Entity("LunchLine.Domain.Entities.Workflow.Order", b =>
                 {
+                    b.HasOne("LunchLine.Domain.Entities.Employee", "Employee")
+                        .WithMany("Orders")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("LunchLine.Domain.Entities.Workflow.Table", "Table")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("TableId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Employee");
+
                     b.Navigation("Table");
                 });
 
-            modelBuilder.Entity("MenuItemOrder", b =>
+            modelBuilder.Entity("LunchLine.Domain.Entities.Workflow.OrderItem", b =>
                 {
-                    b.HasOne("LunchLine.Domain.Entities.Workflow.MenuItem", null)
-                        .WithMany()
-                        .HasForeignKey("MenuItemsId")
+                    b.HasOne("LunchLine.Domain.Entities.Workflow.MenuItem", "MenuItem")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("MenuItemId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("LunchLine.Domain.Entities.Workflow.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("LunchLine.Domain.Entities.Workflow.Order", null)
-                        .WithMany()
-                        .HasForeignKey("OrdersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("MenuItem");
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("LunchLine.Domain.Entities.Employee", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("LunchLine.Domain.Entities.Workflow.MenuItem", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("LunchLine.Domain.Entities.Workflow.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("LunchLine.Domain.Entities.Workflow.Table", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

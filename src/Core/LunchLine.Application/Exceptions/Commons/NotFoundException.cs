@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace LunchLine.Application.Exceptions;
+namespace LunchLine.Application.Exceptions.Commons;
 
 public class NotFoundException<T> : Exception, IBaseException
 {

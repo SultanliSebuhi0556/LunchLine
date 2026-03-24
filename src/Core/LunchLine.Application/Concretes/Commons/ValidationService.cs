@@ -3,7 +3,7 @@ using FluentValidation.Results;
 using LunchLine.Application.Abstractions.Commons;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace LunchLine.Application.Services.Commons;
+namespace LunchLine.Application.Concretes.Commons;
 
 public class ValidationService(IServiceProvider _serviceProvider) : IValidationService
 {

@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using LunchLine.Application.Abstractions.Commons;
+using LunchLine.Application.Concretes.Commons;
 using LunchLine.Application.MapperProfiles;
-using LunchLine.Application.Services.Commons;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 

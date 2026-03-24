@@ -1,4 +1,4 @@
-﻿using LunchLine.Domain.Entities.Workflow;
+using LunchLine.Domain.Entities.Workflow;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -13,11 +13,13 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         builder.Property(x => x.Details).HasMaxLength(250);
 
         builder.HasOne(x => x.Table)
-            .WithMany()
+            .WithMany(x => x.Orders)
             .HasForeignKey(x => x.TableId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasMany(x => x.MenuItems)
-            .WithMany(x => x.Orders);
+        builder.HasOne(x => x.Employee)
+            .WithMany(x => x.Orders)
+            .HasForeignKey(x => x.EmployeeId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
